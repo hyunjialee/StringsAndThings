@@ -1,5 +1,7 @@
 package io.zipcoder;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author tariq
@@ -14,8 +16,17 @@ public class StringsAndThings {
      *           countYZ("day fez"); // Should return 2
      *           countYZ("day fyyyz"); // Should return 2
      */
-    public Integer countYZ(String input){
-        return null;
+    public Integer countYZ(String input) {
+
+        int counter = 0;
+
+        for (int i = 0; i < input.length(); i++) {
+            if ((input.charAt(i) == 'y' || input.charAt(i) == 'z' )
+                    && ((i + 1 == input.length() || !Character.isLetter(input.charAt(i + 1))))) {
+                counter++;
+            }
+        }
+        return counter;
     }
 
     /**
@@ -28,7 +39,9 @@ public class StringsAndThings {
      *           removeString("Hello there", "x") // Should return "Hello there"
      */
     public String removeString(String base, String remove){
-        return null;
+        //base string is the given, remove will erase all instances of string
+
+        return base.replace(remove,"");
     }
 
     /**
@@ -40,8 +53,26 @@ public class StringsAndThings {
      *           containsEqualNumberOfIsAndNot("noisxxnotyynotxisi") // Should return true
      */
     public Boolean containsEqualNumberOfIsAndNot(String input){
-        return null;
+        //give string, return true if "is" = "not" in the string
+        // "IS" counted IN ANY FORM STRING
+
+        Pattern pattern1 = Pattern.compile("is",Pattern.CASE_INSENSITIVE );
+        Pattern pattern2 = Pattern.compile("not", Pattern.CASE_INSENSITIVE);
+        Matcher matcher1 = pattern1.matcher(input);
+        Matcher matcher2 = pattern2.matcher(input);
+
+        int counter1 = 0;
+        int counter2 = 0;
+
+        while(matcher1.find()) {
+            counter1++;
+        }
+        while(matcher2.find()){
+            counter2++;
+        }
+        return counter1 == counter2;
     }
+
 
     /**
      * We'll say that a lowercase 'g' in a string is "happy" if there is another 'g' immediately to its left or right.
